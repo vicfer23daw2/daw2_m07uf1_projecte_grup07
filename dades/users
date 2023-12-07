@@ -1,5 +1,3 @@
-admin:fjeclot:admin:editado@f.com
-gest1:123:gestor:aq@info.com:1:ges:tor:123455
-gest2:Clot23@forever:gestor:ges@info.com:2:ges:tor:123455
-usu1:clotfje:client:ascodevida@f.com:1:usu:ario:1234124:21415125:ES123345444:gest1
-usu2:clotfje:client:usu@f.com:2:usu:ario:1234124:08900:ES1233455667:gest1
+admin:$2y$10$dwzf4oNEhLKJXySoVqaCeugrD4qXrbn2Z0oT3rX9HFUYFSxDOXqjC:admin:editado@f.com
+gest1:$2y$10$BpijAlC9sh2I/3Qe1C7xRO8FOZKJzbSshXgR7MPaxcAFjPdI5Rzbi:gestor:ges@info.com:1:Ges:Tor:616487799
+usu1:$2y$10$A4bIV1Kzay19dRJfmsVO7OMW2hdQxz9CNikpLwc7rM3sMttKFgKli:client:usu@f.com:1:Usu:Ario:617478877:08900:ES1233455667:gest1

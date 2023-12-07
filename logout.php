@@ -34,6 +34,12 @@ if (isset($_POST['confirmar_logout'])) {
 
     <header>
         <h1>Confirmació de Logout</h1>
+        <div class="userlogeado">
+            <?php
+                echo "Nom usuari: ".$_SESSION['username']."<br>";
+                echo "Tipus d'usuari: " . $_SESSION['role'] ;  
+            ?>
+        </div>
     </header>
 
     <section>
@@ -43,17 +49,6 @@ if (isset($_POST['confirmar_logout'])) {
             <a href="interficie.php">No, tornar enrere</a>
         </form>
     </section>
-
-    <footer>
-        <div class="diahora"> 
-        <?php
-            echo "<p>Nom usuari: ".$_SESSION['username']."</p>";
-            echo "<p>Tipus d'usuari: " . $_SESSION['role'] . "</p>";
-            date_default_timezone_set('Europe/Andorra');
-            echo "<p>Data i hora: ".date('d/m/Y h:i:s')."</p>";    
-        ?>
-        </div>
-    </footer>
 
 </body>
 </html>

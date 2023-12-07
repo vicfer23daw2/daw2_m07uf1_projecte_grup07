@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST["edit_client"])) {
         // Modificar client existente
         $editedUsername = $_POST["edited_client_username"];
-        $editedPassword = $_POST["edited_client_password"];
+        $editedPassword = password_hash($_POST["edited_client_password"], PASSWORD_DEFAULT);
         $editedEmail = $_POST["edited_client_email"];
         $editedId = $_POST["edited_client_id"];
         $editedNom = $_POST["edited_client_nom"];
@@ -101,12 +101,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
         file_put_contents($usersFile, implode("\n", $usersData));
 
-        $carpetaComandes = "./comandes/" . $deletedUsername;
-        $carpetaCistelles = "./cistelles/" . $deletedUsername;
-            if (file_exists($carpetaComandes) || file_exists($carpetaCistelles)) {
-                rmdir($carpetaComandes);
-                rmdir($carpetaCistelles);
+        $carpetaComandes = "/var/www/html/zbotiga/comandes/$deletedUsername";
+        $carpetaCistelles = "/var/www/html/zbotiga/cistelles/$deletedUsername";
+         
+        // Eliminar carpeta de comandes
+        if (is_dir($carpetaComandes)) {
+            $files = glob($carpetaComandes . '/*');
+            foreach ($files as $file) {
+                unlink($file);
             }
+            rmdir($carpetaComandes);
+        }
+
+        // Eliminar carpeta de cistelles
+        if (is_dir($carpetaCistelles)) {
+            $files = glob($carpetaCistelles . '/*');
+            foreach ($files as $file) {
+                unlink($file);
+            }
+            rmdir($carpetaCistelles);
+        }
+        
         header("Location: " . $_SERVER["PHP_SELF"]);
         exit();
     }
@@ -149,6 +164,16 @@ function getUserData($username, $usersData)
 
     <header>
         <h1>Gestió d'usuaris Clients</h1>
+        <nav>
+            <a href="interficie.php">Torna a la pàgina anterior</a>
+        </nav>
+        <div class="userlogeado">
+            <?php
+                echo "Nom usuari: ".$_SESSION['username']."<br>";
+                echo "Tipus d'usuari: " . $_SESSION['role'] ;
+                echo '<a href="logout.php">Tanca la sessió</a>';   
+            ?>
+        </div>
     </header>
 
     <section>
@@ -158,7 +183,6 @@ function getUserData($username, $usersData)
             <tr>
                 <th>ID</th>
                 <th>Nom d'Usuari</th>
-                <th>Password</th>
                 <th>Correu Electrònic</th>
                 <th>Nom</th>
                 <th>Cognom</th>
@@ -173,7 +197,6 @@ function getUserData($username, $usersData)
                 <tr>
                     <td><?php echo $id; ?></td>
                     <td><?php echo $username; ?></td>
-                    <td><?php echo $password; ?></td>
                     <td><?php echo $email; ?></td>
                     <td><?php echo $nom; ?></td>
                     <td><?php echo $cognom; ?></td>
@@ -299,19 +322,6 @@ function getUserData($username, $usersData)
             </form>
         </section>
     <?php endif; ?>
-
-    <footer>
-        <p><a href="interficie.php">Torna a la pàgina anterior</a></p>
-        <p><a href="logout.php">Tanca la sessió</a></p>
-        <div class="diahora"> 
-        <?php
-            echo "<p>Nom usuari: ".$_SESSION['username']."</p>";
-            echo "<p>Tipus d'usuari: " . $_SESSION['role'] . "</p>";
-            date_default_timezone_set('Europe/Andorra');
-            echo "<p>Data i hora: ".date('d/m/Y h:i:s')."</p>";    
-        ?>
-        </div>
-    </footer>
 
 </body>
 </html>

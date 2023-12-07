@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usersData = file($usersFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($usersData as $userData) {
         list($storedUsername, $storedPassword, $storedRole, $storedEmail, $storedId, $storedNom, $storedCognom, $storedTelefon, $storedCp, $storedVisa, $nomGestor) = explode(':', $userData);
-        if ($username === $storedUsername && $password === $storedPassword) {
+        if ($username === $storedUsername && (password_verify($password, $storedPassword))) {
             // Usuario autenticado
             $_SESSION["username"] = $username;
             $_SESSION["role"] = $storedRole;

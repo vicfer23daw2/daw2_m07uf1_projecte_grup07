@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST["edit_gestor"])) {
         // Modificar gestor existente
         $editedUsername = $_POST["edited_gestor_username"];
-        $editedPassword = $_POST["edited_gestor_password"];
+        $editedPassword = password_hash($_POST["edited_gestor_password"], PASSWORD_DEFAULT);
         $editedEmail = $_POST["edited_gestor_email"];
         $editedId = $_POST["edited_gestor_id"];
         $editedNom = $_POST["edited_gestor_nom"];
@@ -124,6 +124,16 @@ function getUserData($username, $usersData)
 
     <header>
         <h1>Gestió d'usuaris Gestors</h1>
+        <nav>
+            <a href="interficie.php">Torna a la pàgina anterior</a>
+        </nav>
+        <div class="userlogeado">
+            <?php
+                echo "Nom usuari: ".$_SESSION['username']."<br>";
+                echo "Tipus d'usuari: " . $_SESSION['role'] ;
+                echo '<a href="logout.php">Tanca la sessió</a>';   
+            ?>
+        </div>
     </header>
 
     <section>
@@ -133,7 +143,6 @@ function getUserData($username, $usersData)
             <tr>
                 <th>ID</th>
                 <th>Nom d'Usuari</th>
-                <th>Password</th>
                 <th>Correu Electrònic</th>
                 <th>Nom</th>
                 <th>Cognom</th>
@@ -145,7 +154,6 @@ function getUserData($username, $usersData)
                 <tr>
                     <td><?php echo $id; ?></td>
                     <td><?php echo $username; ?></td>
-                    <td><?php echo $password; ?></td>
                     <td><?php echo $email; ?></td>
                     <td><?php echo $nom; ?></td>
                     <td><?php echo $cognom; ?></td>
@@ -218,7 +226,7 @@ function getUserData($username, $usersData)
                 <input type="text" name="edited_gestor_username" value="<?php echo $selectedGestor; ?>"><br>
                 
                 <label for="edited_gestor_password">Nova Contrasenya:</label>
-                <input type="password" id="edited_gestor_password" name="edited_gestor_password" value="" required><br>
+                <input type="password" id="edited_gestor_password" name="edited_gestor_password" value="<?php echo $editedPassword; ?>" required><br>
                 
                 <label for="edited_gestor_email">Nou Correu Electrònic:</label>
                 <input type="email" id="edited_gestor_email" name="edited_gestor_email" value="<?php echo $editedEmail; ?>" required><br>
@@ -240,19 +248,6 @@ function getUserData($username, $usersData)
             </form>
         </section>
     <?php endif; ?>
-
-    <footer>
-        <p><a href="interficie.php">Torna a la pàgina anterior</a></p>
-        <p><a href="logout.php">Tanca la sessió</a></p>
-        <div class="diahora"> 
-        <?php
-            echo "<p>Nom usuari: ".$_SESSION['username']."</p>";
-            echo "<p>Tipus d'usuari: " . $_SESSION['role'] . "</p>";
-            date_default_timezone_set('Europe/Andorra');
-            echo "<p>Data i hora: ".date('d/m/Y h:i:s')."</p>";    
-        ?>
-        </div>
-    </footer>
 
 </body>
 </html>

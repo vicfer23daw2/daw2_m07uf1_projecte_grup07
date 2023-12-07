@@ -1,0 +1,49 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Estilos para el header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+}
+
+h1 {
+    margin: 0;
+    color: aquamarine;
+}
+
+nav {
+    margin-right: 20px;
+}
+
+nav a {
+    color: aqua;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+div.userlogeado {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+div.userlogeado a {
+    color:aqua;
+    text-decoration: none;
+}
+
+/* Estilos adicionales según sea necesario */

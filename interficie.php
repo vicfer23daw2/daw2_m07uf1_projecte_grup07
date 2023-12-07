@@ -25,6 +25,13 @@ $username = $_SESSION["username"];
 
     <header>
         <h1>Benvingut <?php echo strtoupper($username); ?></h1>
+        <div class="userlogeado">
+            <?php
+                echo "Nom usuari: ".$_SESSION['username']."<br>";
+                echo "Tipus d'usuari: " . $_SESSION['role'] ;
+                echo '<a href="logout.php">Tanca la sessió</a>';   
+            ?>
+        </div>
     </header>
 
     <section>
@@ -43,32 +50,20 @@ $username = $_SESSION["username"];
             <li><a href="clients_assignats.php">Llista de Clients Assignats</a></li>
             <li><a href="correu.php">Correu al Admin</a></li>
             <li><a href="gestio_cataleg.php">Gestió del catàleg de Productes</a></li>
-            <li><a href="comandes.php">Gestionar Comandes de clients</a></li>
+            <li><a href="gestor_comandes.php">Gestionar Comandes de clients</a></li>
         </ul>';
     } elseif ($role === "client") {
         echo '
         <ul>
             <li><a href="perfil_client.php">Les meves dades</a></li>
             <li><a href="correu.php">Correu al meu Gestor</a></li>
+            <li><a href="cataleg_compra.php">Catàleg de Compra</a></li>
             <li><a href="cistella.php">La meva Cistella</a></li>
             <li><a href="comandes.php">Les meves Comandes</a></li>
         </ul>';
     }
     ?>
     </section>
-
-    <footer>
-        <p><a href="logout.php">Tanca la sessió</a></p>
-        <div class="diahora"> 
-        <?php
-            echo "<p>Nom usuari: ".$_SESSION['username']."</p>";
-            echo "<p>Tipus d'usuari: " . $_SESSION['role'] . "</p>";
-            date_default_timezone_set('Europe/Andorra');
-            echo "<p>Data i hora: ".date('d/m/Y h:i:s')."</p>";    
-        ?>
-        </div>
-    </footer>
-
 
 </body>
 </html>

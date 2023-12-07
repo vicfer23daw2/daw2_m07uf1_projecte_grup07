@@ -80,6 +80,16 @@ if (isset($_POST['modificar_producte'])) {
 
     <header>
         <h1>Catàleg de Productes</h1>
+        <nav>
+            <a href="interficie.php">Torna a la pàgina anterior</a>
+        </nav>
+        <div class="userlogeado">
+            <?php
+                echo "Nom usuari: ".$_SESSION['username']."<br>";
+                echo "Tipus d'usuari: " . $_SESSION['role'] ;
+                echo '<a href="logout.php">Tanca la sessió</a>';   
+            ?>
+        </div>
     </header>
 
     <section>
@@ -158,19 +168,6 @@ if (isset($_POST['modificar_producte'])) {
         }
         ?>
     </section>
-
-    <footer>
-        <p><a href="interficie.php">Torna a la pàgina anterior</a></p>
-        <p><a href="logout.php">Tanca la sessió</a></p>
-        <div class="diahora"> 
-        <?php
-            echo "<p>Nom usuari: ".$_SESSION['username']."</p>";
-            echo "<p>Tipus d'usuari: " . $_SESSION['role'] . "</p>";
-            date_default_timezone_set('Europe/Andorra');
-            echo "<p>Data i hora: ".date('d/m/Y h:i:s')."</p>";    
-        ?>
-        </div>
-    </footer>
 
 </body>
 </html>

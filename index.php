@@ -12,13 +12,11 @@
         <h1>Botiga virtual</h1>
     </header>
 
-    <nav>
-        <ul>
-            <li><a href="info.php">Informació de l'Aplicació</a></li>
-            <li><a href="login.php">Iniciar sessió</a></li>
-        </ul>
-    </nav>
-
+    <ul>
+        <li><a href="info.php">Informació de l'Aplicació</a></li>
+        <li><a href="login.php">Iniciar sessió</a></li>
+    </ul>
+    
     <section>
         <p>Benvingut a l'aplicació de comerç electrònic. Aquí pots trobar tots els nostres productes increïbles.</p>
         <p>Si us plau, inicia sessió per accedir a totes les funcionalitats o visita la pàgina d'informació per conèixer més sobre com funciona l'aplicació.</p>

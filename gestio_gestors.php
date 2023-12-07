@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Agregar nuevo gestor
         $newUsername = $_POST["new_gestor_username"];
         if (!usernameExists($newUsername, $usersData)) {
-            $newGestorData = $newUsername . ":" . $_POST["new_gestor_password"] . ":gestor:" . $_POST["new_gestor_email"]. ":" . $_POST["new_gestor_id"] . ":" . $_POST["new_gestor_nom"] . ":" . $_POST["new_gestor_cognom"] . ":" . $_POST["new_gestor_telefon"];
+            $newGestorData = $newUsername . ":" . password_hash($_POST["new_gestor_password"], PASSWORD_DEFAULT) . ":gestor:" . $_POST["new_gestor_email"]. ":" . $_POST["new_gestor_id"] . ":" . $_POST["new_gestor_nom"] . ":" . $_POST["new_gestor_cognom"] . ":" . $_POST["new_gestor_telefon"];
             $usersData[] = $newGestorData;
             file_put_contents($usersFile, implode("\n", $usersData));
             header("Location: " . $_SERVER["PHP_SELF"]);

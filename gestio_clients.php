@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Agregar nuevo client
         $newUsername = $_POST["new_client_username"];
         if (!usernameExists($newUsername, $usersData)) {
-            $newClientData = $newUsername . ":" . $_POST["new_client_password"] . ":client:" . $_POST["new_client_email"]. ":" . $_POST["new_client_id"] . ":" . $_POST["new_client_nom"] . ":" . $_POST["new_client_cognom"] . ":" . $_POST["new_client_telefon"]. ":" . $_POST["new_client_cp"]. ":" . $_POST["new_client_visa"]. ":" . $_POST["new_client_gestorAssignat"];
+            $newClientData = $newUsername . ":" . password_hash($_POST["new_client_password"], PASSWORD_DEFAULT) . ":client:" . $_POST["new_client_email"]. ":" . $_POST["new_client_id"] . ":" . $_POST["new_client_nom"] . ":" . $_POST["new_client_cognom"] . ":" . $_POST["new_client_telefon"]. ":" . $_POST["new_client_cp"]. ":" . $_POST["new_client_visa"]. ":" . $_POST["new_client_gestorAssignat"];
             $usersData[] = $newClientData;
             file_put_contents($usersFile, implode("\n", $usersData));
             $carpetaComandes = "./comandes/" . $newUsername;

@@ -53,7 +53,6 @@ $clientsData = array_filter($usersData, function($userData) {
             <tr>
                 <th>ID</th>
                 <th>Nom d'Usuari</th>
-                <th>Password</th>
                 <th>Correu Electrònic</th>
                 <th>Nom</th>
                 <th>Cognom</th>
@@ -67,7 +66,6 @@ $clientsData = array_filter($usersData, function($userData) {
                 <tr>
                     <td><?php echo $id; ?></td>
                     <td><?php echo $username; ?></td>
-                    <td><?php echo $password; ?></td>
                     <td><?php echo $email; ?></td>
                     <td><?php echo $nom; ?></td>
                     <td><?php echo $cognom; ?></td>

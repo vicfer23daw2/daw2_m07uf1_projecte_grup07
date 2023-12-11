@@ -1,15 +1,15 @@
 <?php
 session_start();
-// Verifica si el usuario está autenticado y es un administrador
+// Verifica si el usuario está autenticado y es un gestor
 if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "gestor") {
-    // Si no está autenticado o no es un administrador, redirige a la página de inicio
+    // Si no está autenticado o no es un administrador, redirige a la página de error
     header("Location: error_acces.php");
     exit();
 }
 ?>
 <?php
 
-// Incloure la classe del catàleg
+// Incloure les classes del catàleg
 include 'Cataleg.php';
 
 // Crear una instància del catàleg

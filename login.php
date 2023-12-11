@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Comprueba las credenciales leyendo el archivo de usuarios
+    // Las credenciales se contienen en el archivo de usuarios
     $usersFile = './dades/users';
 
     // Lee el archivo de usuarios y verifica las credenciales
@@ -14,11 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($usersData as $userData) {
         list($storedUsername, $storedPassword, $storedRole, $storedEmail, $storedId, $storedNom, $storedCognom, $storedTelefon, $storedCp, $storedVisa, $nomGestor) = explode(':', $userData);
         if ($username === $storedUsername && (password_verify($password, $storedPassword))) {
-            // Usuario autenticado
+            // usuario autenticado y su rol
             $_SESSION["username"] = $username;
             $_SESSION["role"] = $storedRole;
 
-            // Redirige a la interfaz correspondiente
+            // Redirige a la interfaz correspondiente según rol
             header("Location: interficie.php");
             exit();
         }

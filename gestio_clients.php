@@ -3,7 +3,7 @@ session_start();
 
 // Verifica si el usuario está autenticado y es un administrador
 if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "admin") {
-    // Si no está autenticado o no es un administrador, redirige a la página de inicio
+    // Si no está autenticado o no es un administrador, redirige a la página de error
     header("Location: error_acces.php");
     exit();
 }
@@ -37,13 +37,13 @@ $selectedClient = null;
 // Verifica si el formulario de gestión de clientes ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["select_client"])) {
-        // Seleccionar un client
+        // Seleccionar un cliente
         $selectedClient = $_POST["selected_client"];
 
-        // Obtén los datos del client seleccionado
+        // Obtén los datos del cliente seleccionado
         list($editedUsername, $editedPassword, $editedRole, $editedEmail, $editedId, $editedNom, $editedCognom, $editedTelefon, $editedCp, $editedVisa, $editedGestorAssignat) = explode(':', getUserData($selectedClient, $usersData));
     } elseif (isset($_POST["add_client"])) {
-        // Agregar nuevo client
+        // Agregar nuevo cliente
         $newUsername = $_POST["new_client_username"];
         if (!usernameExists($newUsername, $usersData)) {
             $newClientData = $newUsername . ":" . password_hash($_POST["new_client_password"], PASSWORD_DEFAULT) . ":client:" . $_POST["new_client_email"]. ":" . $_POST["new_client_id"] . ":" . $_POST["new_client_nom"] . ":" . $_POST["new_client_cognom"] . ":" . $_POST["new_client_telefon"]. ":" . $_POST["new_client_cp"]. ":" . $_POST["new_client_visa"]. ":" . $_POST["new_client_gestorAssignat"];
@@ -58,11 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: " . $_SERVER["PHP_SELF"]);
             exit();
         } else {
-            // Puedes manejar el caso de nombre de usuario duplicado aquí
+            // En caso de nombre de usuario duplicado
             echo "<p style='color: red;'>Error: El nombre de usuario ya existe.</p>";
         }
-    } elseif (isset($_POST["edit_client"])) {
-        // Modificar client existente
+    } elseif (isset($_POST["edit_client"]) && $_POST["metode"] == "PUT") {
+        // Modificar cliente existente
         $editedUsername = $_POST["edited_client_username"];
         $editedPassword = password_hash($_POST["edited_client_password"], PASSWORD_DEFAULT);
         $editedEmail = $_POST["edited_client_email"];
@@ -87,11 +87,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             header("Location: " . $_SERVER["PHP_SELF"]);
         } else {
-            // Puedes manejar el caso de nombre de usuario duplicado aquí
+            // En caso de nombre de usuario duplicado
             echo "<p style='color: red;'>Error: El nombre de usuario ya existe.</p>";
         }
-    } elseif (isset($_POST["delete_client"])) {
-        // Eliminar client
+    } elseif (isset($_POST["delete_client"]) && $_POST["metode"] == "DELETE") {
+        // Eliminar cliente
         $deletedUsername = $_POST["deleted_client_username"];
         $clientsData = array_filter($clientsData, function ($clientData) use ($deletedUsername) {
             return explode(':', $clientData)[0] !== $deletedUsername;
@@ -207,6 +207,7 @@ function getUserData($username, $usersData)
                     <td>
                         <!-- Botón para eliminar client -->
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <input type="hidden" name="metode" value="DELETE" />
                             <input type="hidden" name="deleted_client_username" value="<?php echo $username; ?>">
                             <button type="submit" name="delete_client">Eliminar</button>
                         </form>
@@ -319,6 +320,7 @@ function getUserData($username, $usersData)
                 </select>
 
                 <button type="submit" name="edit_client">Modificar</button>
+                <input type="hidden" name="metode" value="PUT" />
             </form>
         </section>
     <?php endif; ?>

@@ -3,7 +3,7 @@ session_start();
 
 // Verifica si el usuario está autenticado y es un cliente
 if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "client") {
-    // Si no está autenticado o no es un cliente, redirige a la página de inicio
+    // Si no está autenticado o no es un cliente, redirige a la página de error
     header("Location: error_acces.php");
     exit();
 }
@@ -17,7 +17,7 @@ $cataleg = new Cataleg();
 // Obtenim l'usuari actual
 $username = $_SESSION['username'];
 
-// Ruta del fitxer de la cistella
+// Ruta dels fitxers
 $fitxerCistella = "/var/www/html/zbotiga/cistelles/$username/cistella_$username";
 $fitxerComanda = "/var/www/html/zbotiga/comandes/$username/comandes_$username";
 

@@ -1,8 +1,8 @@
 <?php
 session_start();
-// Verifica si el usuario está autenticado y es un administrador
+// Verifica si el usuario está autenticado y es un client
 if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "client") {
-    // Si no está autenticado o no es un administrador, redirige a la página de inicio
+    // Si no está autenticado o no es un cleint, redirige a la página de error
     header("Location: error_acces.php");
     exit();
 }

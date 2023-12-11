@@ -3,7 +3,7 @@ session_start();
 
 // Verifica si el usuario está autenticado y es un administrador
 if (!isset($_SESSION["username"]) || $_SESSION["role"] !== "admin") {
-    // Si no está autenticado o no es un administrador, redirige a la página de inicio
+    // Si no está autenticado o no es un administrador, redirige a la página de error
     header("Location: error_acces.php");
     exit();
 }
@@ -46,10 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: " . $_SERVER["PHP_SELF"]);
             exit();
         } else {
-            // Puedes manejar el caso de nombre de usuario duplicado aquí
+            // En caso de nombre de usuario duplicado
             echo "<p style='color: red;'>Error: El nombre de usuario ya existe.</p>";
         }
-    } elseif (isset($_POST["edit_gestor"])) {
+    } elseif (isset($_POST["edit_gestor"])&& $_POST["metode"] == "PUT") {
         // Modificar gestor existente
         $editedUsername = $_POST["edited_gestor_username"];
         $editedPassword = password_hash($_POST["edited_gestor_password"], PASSWORD_DEFAULT);
@@ -71,10 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             file_put_contents($usersFile, implode("\n", $usersData));
             header("Location: " . $_SERVER["PHP_SELF"]);
         } else {
-            // Puedes manejar el caso de nombre de usuario duplicado aquí
+            // En caso de nombre de usuario duplicado
             echo "<p style='color: red;'>Error: El nombre de usuario ya existe.</p>";
         }
-    } elseif (isset($_POST["delete_gestor"])) {
+    } elseif (isset($_POST["delete_gestor"]) && $_POST["metode"] == "DELETE") {
         // Eliminar gestor
         $deletedUsername = $_POST["deleted_gestor_username"];
         $gestorsData = array_filter($gestorsData, function ($gestorData) use ($deletedUsername) {
@@ -161,6 +161,7 @@ function getUserData($username, $usersData)
                     <td>
                         <!-- Botón para eliminar gestor -->
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                            <input type="hidden" name="metode" value="DELETE" />
                             <input type="hidden" name="deleted_gestor_username" value="<?php echo $username; ?>">
                             <button type="submit" name="delete_gestor">Eliminar</button>
                         </form>
@@ -245,6 +246,7 @@ function getUserData($username, $usersData)
                 
                 
                 <button type="submit" name="edit_gestor">Modificar</button>
+                <input type="hidden" name="metode" value="PUT" />
             </form>
         </section>
     <?php endif; ?>
